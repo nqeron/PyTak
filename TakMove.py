@@ -72,7 +72,7 @@ def parse_server_move(move): #P a5; M a5 a4 1 --> a5, a5-
         noble = ""
         if len(move) > 5:
             noble = move[5]
-        out = square
+        out = square.lower()
         if noble == "W":
             out = "S"+out
         elif noble == "C":
@@ -100,7 +100,7 @@ def parse_server_move(move): #P a5; M a5 a4 1 --> a5, a5-
             drops = ""
         else:
             drops = "".join(drops)
-        out = top + from_square + direction + drops
+        out = top + from_square.lower() + direction + drops
         return out
     else:
         raise ParseMoveException("No such Move code "+code)

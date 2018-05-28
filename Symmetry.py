@@ -105,22 +105,26 @@ def mirror_diag(move_list, size):
 
 
 def standardize(move_list,size):
+    if len(move_list) == 1 and move_list[0] == "":
+        return [""]
     gc = get_col_num
     gr = get_row_num
     mid = int(size / 2)
-    size = size - 1
     inner_triangle = mid - 1
 
-    if gr(move_list[0]) > mid:
+    square_zero = get_square(move_list[0])
+
+    if gr(square_zero) > mid:
         move_list = mirror_y(move_list, size)
-    if gc(move_list[0]) > mid:
+    if gc(square_zero) > mid:
         move_list = mirror_x(move_list, size)
 
     for off_move in move_list:
-        if gc(off_move) != gr(off_move):
+        square = get_square(off_move)
+        if gc(square) != gr(square):
             break
 
-    if m_dist(gc(off_move), gr(off_move), size, 0) > size:
+    if m_dist(gc(get_square(off_move)), gr(get_square(off_move)), 0, size - 1) > size: #will this work?
         move_list = mirror_diag(move_list, size)
 
     return move_list

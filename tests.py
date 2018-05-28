@@ -111,5 +111,19 @@ class SymmetryTests(unittest.TestCase):
                          Symmetry.mirror_diag(["5a1+", "4c2>31", "d3-", "3f4<111", "b5", "Ce6"], 6))
 
 
+class StandardizeTests(unittest.TestCase):
+    def testNoFlips(self):
+        self.assertEqual(["a1", "a5", "c4", "b3", "b4", "a4", "b5", "c3", "Cd4", "c3+", "d4<", "d4", "3c4>12", "Sc4",
+                          "c5"],
+                         Symmetry.standardize(["a1", "a5", "c4", "b3", "b4", "a4", "b5", "c3", "Cd4", "c3+", "d4<",
+                                               "d4", "3c4>12", "Sc4", "c5"], 5))
+
+    def testDiagFlip(self):
+        self.assertEqual(["a1", "a5", "c4", "b3", "b4", "a4", "b5", "c3", "Cd4", "c3+", "d4<", "d4", "3c4>12", "Sc4",
+                          "c5"],
+                         Symmetry.standardize(["a1", "e1", "d3", "c2", "d2", "d1", "e2", "c3", "Cd4", "c3>", "d4-",
+                                               "d4", "3d3+12", "Sd3", "e3"], 5))
+
+
 if __name__ == "__main__":
     unittest.main()
