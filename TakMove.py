@@ -7,10 +7,6 @@ class Slide(Enum):
     DOWN = 2
     LEFT = 3
 
-    def __init__(self, slide):
-        self.slide = slide
-        super()
-
     @staticmethod
     def get_slide_val(move):
         pos = 2
@@ -29,19 +25,22 @@ class Slide(Enum):
 
     @staticmethod
     def is_slide(move):
-        if len(move) > 2:
-            if move[2] == "+" or move[2] == "-" or move[2] == ">" or move[2] == "<":
+        pos = 2
+        if not move[0].isalpha():
+            pos = 3
+        if len(move) > pos:
+            if move[pos] == "+" or move[pos] == "-" or move[pos] == ">" or move[pos] == "<":
                 return True
         return False
 
     def __str__(self):
-        if self.slide == Slide.UP:
+        if self.value == Slide.UP.value:
             return "+"
-        elif self.slide == Slide.DOWN:
+        elif self.value == Slide.DOWN.value:
             return "-"
-        elif self.slide == Slide.RIGHT:
+        elif self.value == Slide.RIGHT.value:
             return ">"
-        elif self.slide == Slide.LEFT:
+        elif self.value == Slide.LEFT.value:
             return "<"
 
 
@@ -64,7 +63,7 @@ class Node:
         self.count += 1
 
 
-def parse_move(move): #P a5; M a5 a4 1 --> a5, a5-
+def parse_server_move(move): #P a5; M a5 a4 1 --> a5, a5-
     if move == "":
         return ""
     code = move[0]

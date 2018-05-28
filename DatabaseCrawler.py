@@ -10,7 +10,7 @@ for notation in cursor.fetchall():
     moves = notation.split(",")
     moves_ptn = []
     for move in moves:
-        move_ptn = TakMove.parse_move(move).lower()
+        move_ptn = TakMove.parse_server_move(move).lower()
         moves_ptn.append(move_ptn)
     moves_ptn = Symmetry.standardize(moves_ptn, 5)
     print(moves_ptn)

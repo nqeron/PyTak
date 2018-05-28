@@ -9,18 +9,36 @@ def m_dist(xOne, yOne, xTwo, yTwo):
     return int(math.fabs(xOne - xTwo) + math.fabs(yOne - yTwo))
 
 
-def get_row_num(pos):
-    return int(pos[1]) - 1 #zero base
+def get_square(pos):
+    if pos[0].isalpha() and pos[0] != "C" and pos[0] != "S":
+        return pos[:2]
+    else:
+        return pos[1:3]
 
 
-def get_col_num(pos):
-    return alphabet.index(pos[0])
+def get_row_num(square):
+    return int(square[1]) - 1 #zero base
+
+
+def get_col_num(square):
+    return alphabet.index(square[0])
+
+
+def get_top(pos):
+    if pos[0].isalpha() and pos[0] != "C" and pos[0] != "S":
+        return ""
+    else:
+        return pos[0]
 
 
 def mirror_y(move_list, size):
     out = []
     for move in move_list:
-        col = size - get_col_num(move)
+        top = get_top(move)
+        square = get_square(move)
+        col = get_col_num(square)
+        row = size - get_row_num(square)
+        col = string.ascii_lowercase[col]
         slide = ""
         if TakMove.Slide.is_slide(move):
             slide = TakMove.Slide.get_slide_val(move)
@@ -29,9 +47,9 @@ def mirror_y(move_list, size):
             elif slide == TakMove.Slide.DOWN:
                 slide = TakMove.Slide.UP
         rest = ""
-        if len(move) > 3:
-            rest = move[3:]
-        out_move = move[0] + str(col + 1) + str(slide) + rest
+        if len(move) >= 4:
+            rest = move[4:]
+        out_move = top + col + str(row) + str(slide) + rest
         out.append(out_move)
     return out
 
@@ -39,8 +57,11 @@ def mirror_y(move_list, size):
 def mirror_x(move_list, size):
     out = []
     for move in move_list:
-        row = size - get_row_num(move)
-        row = string.ascii_lowercase[row]
+        top = get_top(move)
+        square = get_square(move)
+        row = get_row_num(square)
+        col = size - get_col_num(square) - 1
+        col = string.ascii_lowercase[col]
         slide = ""
         if TakMove.Slide.is_slide(move):
             slide = TakMove.Slide.get_slide_val(move)
@@ -49,9 +70,9 @@ def mirror_x(move_list, size):
             elif slide == TakMove.Slide.RIGHT:
                 slide = TakMove.Slide.LEFT
         rest = ""
-        if len(move) > 3:
-            rest = move[3:]
-        out_move = row + move[1] + str(slide) + rest
+        if len(move) >= 4:
+            rest = move[4:]
+        out_move = top + col + str(row + 1) + str(slide) + rest
         out.append(out_move)
     return out
 
@@ -59,9 +80,11 @@ def mirror_x(move_list, size):
 def mirror_diag(move_list, size):
     out = []
     for move in move_list:
-        row = get_col_num(move)
-        col = get_row_num(move)
-        row = string.ascii_lowercase[row]
+        top = get_top(move)
+        square = get_square(move)
+        row = get_col_num(square)
+        col = get_row_num(square)
+        col = string.ascii_lowercase[col]
         slide = ""
         if TakMove.Slide.is_slide(move):
             slide = TakMove.Slide.get_slide_val(move)
@@ -76,7 +99,7 @@ def mirror_diag(move_list, size):
         rest = ""
         if len(move) > 3:
             rest = move[3:]
-        out_move = row + str(col + 1) + str(slide) + rest
+        out_move = top + col + str(row + 1) + str(slide) + rest
         out.append(out_move)
     return out
 
