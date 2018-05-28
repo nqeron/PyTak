@@ -97,8 +97,8 @@ def mirror_diag(move_list, size):
             elif slide == TakMove.Slide.LEFT:
                 slide = TakMove.Slide.DOWN
         rest = ""
-        if len(move) > 3:
-            rest = move[3:]
+        if len(move) > 4:
+            rest = move[4:]
         out_move = top + col + str(row + 1) + str(slide) + rest
         out.append(out_move)
     return out

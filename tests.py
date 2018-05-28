@@ -102,6 +102,14 @@ class SymmetryTests(unittest.TestCase):
         self.assertEqual(["5a1>", "4b2+31", "c3<", "3d4-111", "e5", "Cf6"],
                          Symmetry.mirror_y(["5a6>", "4b5-31", "c4<", "3d3+111", "e2", "Cf1"], 6))
 
+    def testDiagFlipFive(self):
+        self.assertEqual(["5a1>", "4b3+31", "c4<", "3d5-111", "e2"],
+                         Symmetry.mirror_diag(["5a1+", "4c2>31", "d3-", "3e4<111", "b5"], 5))
+
+    def testDiagFlipSix(self):
+        self.assertEqual(["5a1>", "4b3+31", "c4<", "3d6-111", "e2", "Cf5"],
+                         Symmetry.mirror_diag(["5a1+", "4c2>31", "d3-", "3f4<111", "b5", "Ce6"], 6))
+
 
 if __name__ == "__main__":
     unittest.main()
