@@ -2,6 +2,21 @@ import TakMove
 import Symmetry
 import sqlite3
 
+
+def connectToDatabase(dbName):
+	return sqlite3.connect(dbName)
+
+def closeDatabase(db):
+	db.close()
+
+def collectMoves(notation,size=5):
+	moves = notation.split(",")
+	moves_ptn = []
+	for move in moves:
+		move_ptn = TakMove.parse_server_move(move)
+		moves_ptn.append(move_ptn)
+	moves_ptn = Symmetry.standardize(moves_ptn,size)
+
 games_db = sqlite3.connect("games_anon.db")
 cursor = games_db.cursor()
 cursor.execute("SELECT notation FROM games WHERE size = 5")
